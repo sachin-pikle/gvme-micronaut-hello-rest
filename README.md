@@ -1,8 +1,11 @@
 # micronaut-hello
 
+This is a simple hello web application using the Micronaut framework and GraalVM Native Image.
+
 ## App JAR
 
-### Build app JAR
+### Build the app JAR
+
 ```shell
 mvn package
 ```
@@ -16,7 +19,7 @@ mvn package
 ### Run the app JAR
 
 ```shell
-java -jar target/micronautguide-0.1.jar
+java -jar target/mn-hello-0.1.jar
 ```
 
 ### Test the app JAR
@@ -26,7 +29,9 @@ java -jar target/micronautguide-0.1.jar
 - http://localhost:8080/Micronaut should output "Hello Micronaut"
 
 
-## Build the app native executable
+## App native executable
+
+### Build the app native executable
 
 ```shell
 mvn package -Dpackaging=native-image
@@ -38,9 +43,14 @@ mvn package -Dpackaging=native-image
 ./mvnw package -Dpackaging=native-image
 ```
 
-
-## Run the app native executable
+### Run the app native executable
 
 ```shell
-./target/
+./target/mn-hello
 ```
+
+### Test the app native executable
+
+- http://localhost:8080/ should output "Hello World"
+
+- http://localhost:8080/Micronaut-Graal-Native should output "Hello Micronaut-Graal-Native"
