@@ -1,3 +1,19 @@
+Thumbs.db
+.DS_Store
+.gradle
+.mvn
+build/
+target/
+out/
+.idea
+*.iml
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+.factorypath
+
 # Compiled class file
 *.class
 
