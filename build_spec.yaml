@@ -37,9 +37,11 @@ steps:
     command: |
       echo "JAVA_HOME: $JAVA_HOME"
       echo "After PATH: $PATH"
-      printf "Java version:\n $(java -version) \n"
-      printf "Native-image version: $(native-image --version) \n"
-      printf "Maven version:\n $(mvn --version) \n"
+      echo "Java version:"
+      echo "$(java -version) \n"
+      echo "Native-image version: $(native-image --version)"
+      echo "Maven version:"
+      echo "$(mvn --version)"
       echo "Current dir: $(pwd)"
       printf "Current dir contents:\n $(ls -alh)"  
   # - type: Command
