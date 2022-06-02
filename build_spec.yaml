@@ -1,0 +1,71 @@
+version: 0.1
+component: build
+timeoutInSeconds: 20000
+runAs: root
+shell: bash
+env:
+  variables:
+    "JAVA_HOME" : "/usr/lib64/graalvm/graalvm22-ee-java17"
+    # PATH is a reserved variable and cannot be defined as a variable.
+    # However, PATH can be changed in a build step and the change is visible in subsequent steps.
+steps:
+  - type: Command
+    name: "Temporary workaround: Set up the yum repo"
+    command: |
+      ##### BEGIN: Temporary workaround. This step will move to the build runner.
+      (echo -e '[ol7_oci_included]' && \
+      echo 'name=Oracle Software for OCI users on Oracle Linux $releasever ($basearch)' && \
+      echo 'baseurl=https://yum-phx.oracle.com/repo/OracleLinux/OL7/oci/included/\$basearch/' && \
+      echo 'gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle' && \
+      echo 'gpgcheck=1' && \
+      echo 'enabled=1') > /etc/yum.repos.d/oci-included-ol7.repo
+      yum-config-manager --enable ol7_optional_latest
+      ## yum-config-manager --enable ol7_oci_included
+      ##### END: Temporary workaround. This step will move to the build runner.
+  - type: Command
+    name: "Install GraalVM Enterprise 22.1 Java 17 - JDK and Native Image"
+    command: |
+      yum -y install graalvm22-ee-17-native-image
+  - type: Command
+    name: "Set the PATH here. JAVA_HOME already set in env > variables above."
+    command: |
+      echo "JAVA_HOME: $JAVA_HOME"
+      echo "Before PATH: $PATH"
+      export PATH=$JAVA_HOME/bin:$PATH
+  - type: Command
+    name: "Post-install checks"
+    command: |
+      echo "JAVA_HOME: $JAVA_HOME"
+      echo "After PATH: $PATH"
+      printf "Java version:\n $(java -version) \n"
+      printf "Native-image version: $(native-image --version) \n"
+      printf "Maven version:\n $(mvn --version) \n"
+      echo "Current dir: $(pwd)"
+      printf "Current dir contents:\n $(ls -alh)"  
+  # - type: Command
+  #   name: "Build the JAR"
+  #   command: |
+  #     ./mvnw --no-transfer-progress clean package
+  # - type: Command
+  #   name: "Run the JAR"
+  #   command: |
+  #     java -jar target/mn-hello-0.1.jar
+  # - type: Command
+  #   name: "Run mvn clean to remove all generated build files"
+  #   command: |
+  #     ./mvnw clean
+  - type: Command
+    name: "Build the native executable"
+    command: |
+      ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
+  - type: Command
+    name: "Run the native executable"
+    command: |
+      ./target/mn-hello
+outputArtifacts:
+  - name: app_jar
+    type: BINARY
+    location: target/mn-hello-0.1.jar
+  - name: app_native_executable
+    type: BINARY
+    location: target/mn-hello
