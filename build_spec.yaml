@@ -47,10 +47,6 @@ steps:
   #   command: |
   #     ./mvnw --no-transfer-progress clean package
   # - type: Command
-  #   name: "Run the JAR"
-  #   command: |
-  #     java -jar target/mn-hello-0.1.jar
-  # - type: Command
   #   name: "Run mvn clean to remove all generated build files"
   #   command: |
   #     ./mvnw clean
@@ -58,10 +54,6 @@ steps:
     name: "Build the native executable"
     command: |
       ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
-  - type: Command
-    name: "Run the native executable"
-    command: |
-      ./target/mn-hello
 outputArtifacts:
   - name: app_jar
     type: BINARY
