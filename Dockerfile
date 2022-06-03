@@ -24,5 +24,4 @@ EXPOSE 8080
 WORKDIR /home/app
 
 COPY target/${APP_FILE} app
-RUN pwd && ls -lh
 ENTRYPOINT ["./app"]
