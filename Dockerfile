@@ -5,7 +5,7 @@
 # Statically linking all your libraries except glibc ensures your 
 # application has all the libraries it needs to run on any 
 # Linux glibc-based distribution like "gcr.io/distroless/base". 
-# The application runtime image size is only 63.8 MB.
+# The application runtime image size is only 82.5 MB.
 # 
 # Reference: https://www.graalvm.org/22.1/reference-manual/native-image/StaticImages/#build-mostly-static-native-image
 #
