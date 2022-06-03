@@ -66,7 +66,7 @@ steps:
                   --build-arg APP_FILE=${APP_FILE} \
                   -t ${TAG} .
   - type: Command
-    name: "Post-packaging check"
+    name: "Post-packaging checks"
     command: |
       echo "List of docker images:"
       echo "$(docker images)"  
