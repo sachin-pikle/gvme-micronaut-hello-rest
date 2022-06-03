@@ -92,17 +92,22 @@
       <plugin>
         <groupId>io.micronaut.build</groupId>
         <artifactId>micronaut-maven-plugin</artifactId>
+      </plugin>
+      <!-- Begin: Added for passing additional arguments to the native-image build tool -->
+      <plugin>
+        <groupId>org.graalvm.buildtools</groupId>
+        <artifactId>native-maven-plugin</artifactId>
         <configuration>
-          <nativeImageBuildArgs>
-            <nativeImageBuildArg>-H:+ReportExceptionStackTraces</nativeImageBuildArg>
-            <nativeImageBuildArg>-H:+StaticExecutableWithDynamicLibC</nativeImageBuildArg>
-            <nativeImageBuildArg>--verbose</nativeImageBuildArg>
+          <buildArgs combine.children="append">
+            <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+            <buildArg>-H:+StaticExecutableWithDynamicLibC</buildArg>
+            <buildArg>--verbose</buildArg>
             <!-- For Quick Build (22.1+) -->
-            <nativeImageBuildArg>-Ob</nativeImageBuildArg>
-          </nativeImageBuildArgs>
+            <buildArg>-Ob</buildArg>
+          </buildArgs>
         </configuration>
       </plugin>
-      
+      <!-- End: Added for passing additional arguments to the native-image build tool -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
