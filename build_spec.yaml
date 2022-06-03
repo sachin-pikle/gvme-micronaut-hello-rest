@@ -68,20 +68,20 @@ steps:
   #   name: "Run mvn clean to remove all generated build files"
   #   command: |
   #     ./mvnw clean
-  # - type: Command
-  #   name: "Build the native executable"
-  #   command: |
-  #     ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
-  # - type: Command
-  #   name: "Package the native executable in a runtime container image"
-  #   command: |
-  #     docker build -f ./Dockerfile \
-  #                 --build-arg APP_FILE=${APP_FILE} \
-  #                 -t ${TAG} .
   - type: Command
-    name: "Build the native executable and package it in a runtime container image"
+    name: "Build the native executable"
     command: |
-      ./mvnw package -Dpackaging=docker-native -Dmicronaut.native-image.base-image-run=gcr.io/distroless/base -Pgraalvm -Dmicronaut.native-image.args="--verbose"
+      ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
+  - type: Command
+    name: "Package the native executable in a runtime container image"
+    command: |
+      docker build -f ./Dockerfile \
+                  --build-arg APP_FILE=${APP_FILE} \
+                  -t ${TAG} .
+  # - type: Command
+  #   name: "Build the native executable and package it in a runtime container image"
+  #   command: |
+  #     ./mvnw package -Dpackaging=docker-native -Dmicronaut.native-image.base-image-run=gcr.io/distroless/base -Pgraalvm -Dmicronaut.native-image.args="--verbose"
   - type: Command
     name: "Post-packaging checks"
     command: |
