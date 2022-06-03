@@ -10,11 +10,19 @@
 # Reference: https://www.graalvm.org/22.1/reference-manual/native-image/StaticImages/#build-mostly-static-native-image
 #
 
-FROM gcr.io/distroless/base AS runtime
+## Begin: Option 1
+# FROM gcr.io/distroless/base AS runtime
+## End: Option 1
+
+## Begin: Option 2
+FROM frolvlad/alpine-glibc:alpine-3.12
+RUN apk update && apk add libstdc++
+## End: Option 2
 
 ARG APP_FILE
 EXPOSE 8080
 WORKDIR /home/app
 
 COPY target/${APP_FILE} app
+RUN pwd && ls -lh
 ENTRYPOINT ["./app"]
