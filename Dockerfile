@@ -2,8 +2,8 @@
 # This is a Dockerfile to create a small runtime container image 
 # by packaging the Micronaut app native executable in a 
 # mostly static lightweight base image like:
-# Option 1: With frolvlad/alpine-glibc, the runtime image size is 84.1 MB
-# Option 2: With gcr.io/distroless/base, the runtime image size is 91.2 MB
+# Option 1: With frolvlad/alpine-glibc, the runtime image size is 75.3 MB
+# Option 2: With gcr.io/distroless/base, the runtime image size is 82.4 MB
 #
 
 # Option 1: frolvlad/alpine-glibc
