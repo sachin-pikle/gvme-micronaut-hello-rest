@@ -8,6 +8,8 @@ env:
     "JAVA_HOME" : "/usr/lib64/graalvm/graalvm22-ee-java17"
     # PATH is a reserved variable and cannot be defined as a variable.
     # However, PATH can be changed in a build step and the change is visible in subsequent steps.
+    TAG: "mn-hello:0.0.1"
+    APP_FILE: "mn-hello"
 steps:
   - type: Command
     name: "Temporary workaround: Set up the yum repo"
@@ -57,6 +59,17 @@ steps:
     name: "Build the native executable"
     command: |
       ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
+  - type: Command
+    name: "Package the native executable in a runtime container image"
+    command: |
+      docker build -f ./Dockerfile \
+                  --build-arg APP_FILE=${APP_FILE} \
+                  -t ${TAG} .
+  - type: Command
+    name: "Post-packaging check"
+    command: |
+      echo "List of docker images:"
+      echo "$(docker images)"  
 outputArtifacts:
   - name: app_jar
     type: BINARY
@@ -64,3 +77,9 @@ outputArtifacts:
   - name: app_native_executable
     type: BINARY
     location: target/mn-hello
+  - name: runtime_image
+    type: DOCKER_IMAGE
+    # this is only the locally exported container image name
+    # this location tag doesn't effect the tag used to deliver the container image
+    # to the Container Registry.
+    location: ${TAG}
