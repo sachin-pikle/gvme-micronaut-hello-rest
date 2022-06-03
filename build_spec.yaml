@@ -8,7 +8,7 @@ env:
     "JAVA_HOME" : "/usr/lib64/graalvm/graalvm22-ee-java17"
     # PATH is a reserved variable and cannot be defined as a variable.
     # However, PATH can be changed in a build step and the change is visible in subsequent steps.
-    TAG: "mn-hello:0.0.1"
+    TAG: "mn-hello-ni:0.0.1"
     APP_FILE: "mn-hello"
 steps:
   - type: Command
