@@ -25,19 +25,6 @@ steps:
       export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
   - type: Command
-    name: "Temporary workaround: Set up the yum repo"
-    command: |
-      ##### BEGIN: Temporary workaround. This step will move to the build runner.
-      (echo -e '[ol7_oci_included]' && \
-      echo 'name=Oracle Software for OCI users on Oracle Linux $releasever ($basearch)' && \
-      echo 'baseurl=https://yum-phx.oracle.com/repo/OracleLinux/OL7/oci/included/\$basearch/' && \
-      echo 'gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-oracle' && \
-      echo 'gpgcheck=1' && \
-      echo 'enabled=1') > /etc/yum.repos.d/oci-included-ol7.repo
-      yum-config-manager --enable ol7_optional_latest
-      ## yum-config-manager --enable ol7_oci_included
-      ##### END: Temporary workaround. This step will move to the build runner.
-  - type: Command
     name: "Install GraalVM Enterprise 22.1 Java 17 - JDK and Native Image"
     command: |
       yum -y install graalvm22-ee-17-native-image
@@ -56,7 +43,7 @@ steps:
       echo "$(java -version) \n"
       echo "Native-image version: $(native-image --version)"
       echo "Maven version:"
-      echo "$(mvn --version)"
+      echo "$(./mvnw --version)"
       echo "Micronaut version: $(mn --version)"
       echo "Current dir: $(pwd)"
       printf "Current dir contents:\n $(ls -alh)"  
