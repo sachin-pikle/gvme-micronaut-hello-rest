@@ -3,7 +3,7 @@
 #### This information can be helpful in understanding and debugging builds.
 version: 0.1
 component: build
-timeoutInSeconds: 600
+timeoutInSeconds: 900
 runAs: root
 shell: bash
 env:
