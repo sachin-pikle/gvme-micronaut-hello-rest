@@ -1,6 +1,6 @@
 version: 0.1
 component: build
-timeoutInSeconds: 900
+timeoutInSeconds: 600
 runAs: root
 shell: bash
 env:
@@ -25,55 +25,27 @@ steps:
       export BUILDRUN_HASH=`echo ${OCI_BUILD_RUN_ID} | rev | cut -c 1-7`
       echo "BUILDRUN_HASH: " $BUILDRUN_HASH
   - type: Command
-    name: "Install GraalVM Enterprise 22.1 Java 17 - JDK and Native Image"
+    name: "Install the latest GraalVM Enterprise 22.x Java 17 - JDK and Native Image"
     command: |
       yum -y install graalvm22-ee-17-native-image
   - type: Command
     name: "Set the PATH here. JAVA_HOME already set in env > variables above."
     command: |
-      echo "JAVA_HOME: $JAVA_HOME"
-      echo "Before PATH: $PATH"
       export PATH=$JAVA_HOME/bin:$PATH
-  - type: Command
-    name: "Post-install checks"
-    command: |
-      echo "JAVA_HOME: $JAVA_HOME"
-      echo "After PATH: $PATH"
-      echo "Java version:"
-      echo "$(java -version) \n"
-      echo "Native-image version: $(native-image --version)"
-      echo "Maven version:"
-      echo "$(./mvnw --version)"
-      echo "Micronaut version: $(mn --version)"
-      echo "Current dir: $(pwd)"
-      printf "Current dir contents:\n $(ls -alh)"  
   # - type: Command
-  #   name: "Build the JAR"
+  #   name: "Example 1: Build a JAR with the installed GraalVM Enterprise 22.x Java 17 - JDK"
   #   command: |
   #     ./mvnw --no-transfer-progress clean package
-  # - type: Command
-  #   name: "Run mvn clean to remove all generated build files"
-  #   command: |
-  #     ./mvnw clean
   - type: Command
-    name: "Build the native executable"
+    name: "Example 2: Build a native executable with the installed GraalVM Enterprise 22.x Java 17 - Native Image"
     command: |
-      ./mvnw --no-transfer-progress clean package -Dpackaging=native-image
+      ./mvnw --no-transfer-progress package -Dpackaging=native-image
   - type: Command
     name: "Package the native executable in a runtime container image"
     command: |
       docker build -f ./Dockerfile \
                   --build-arg APP_FILE=${APP_FILE} \
                   -t ${TAG} .
-  # - type: Command
-  #   name: "Build the native executable and package it in a runtime container image"
-  #   command: |
-  #     ./mvnw package -Dpackaging=docker-native -Dmicronaut.native-image.base-image-run=gcr.io/distroless/base -Pgraalvm -Dmicronaut.native-image.args="--verbose"
-  - type: Command
-    name: "Post-packaging checks"
-    command: |
-      echo "List of docker images:"
-      echo "$(docker images)"  
 outputArtifacts:
   - name: app_jar
     type: BINARY
