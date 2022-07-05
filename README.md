@@ -1,14 +1,14 @@
-# Micronaut Hello World REST App with GraalVM
+# Micronaut Hello World REST App with GraalVM Enterprise
 
-This is a simple hello world REST application using the Micronaut framework and GraalVM (JDK and Native Image).
+This is a simple hello world REST application using the Micronaut framework and GraalVM Enterprise Native Image and JDK.
 
 ## Prerequisites
 
 To run this sample on local (Mac OS), you need the following:
 
 1. The latest GraalVM Enterprise 22.x for Java 17 components:
-    - JDK, and
-    - Native Image
+    - Native Image, and
+    - JDK
 
 2. (Optional) Maven. If you don't have Maven installed, you can use the Maven wrapper (`./mvnw`) included in the Micronaut code sample.
 
@@ -117,7 +117,9 @@ To run this sample on local (Mac OS), you need the following:
 
 ### Learning from Micronaut-generated Dockerfiles
 
-Let's use the Micronaut Maven plugins to generate a Dockerfile so we can learn how Micronaut builds and packages native executables in small runtime container images.
+Let's use the Micronaut Maven plugin to generate a Dockerfile so we can learn how Micronaut uses multistage Docker builds to build the application as a native executable and package it in small runtime container images.
+
+Micronaut uses GraalVM Community Edition as you will see in the `FROM ghcr.io/graalvm/...` statement in the generated Dockerfiles below.
 
 #### Default option
 
