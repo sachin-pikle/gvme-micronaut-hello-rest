@@ -1,59 +1,116 @@
-# micronaut-hello
+# Micronaut Hello World REST App with GraalVM
 
-This is a simple hello web application using the Micronaut framework and GraalVM Native Image.
+This is a simple hello world REST application using the Micronaut framework and GraalVM (JDK and Native Image).
 
-## App JAR
+## Prerequisites
 
-### Build the app JAR
+To run this sample on local (Mac OS), you need the following:
 
-```shell
-mvn package
-```
+1. The latest GraalVM Enterprise 22.x for Java 17 components:
+    - JDK, and
+    - Native Image
 
-**OR** 
+2. (Optional) Maven. If you don't have Maven installed, you can use the Maven wrapper (`./mvnw`) included in the Micronaut code sample.
 
-```shell
-./mvnw package
-```
+3. Check the versions installed using:
 
-### Run the app JAR
+    ```shell
+    $ echo $JAVA_HOME
 
-```shell
-java -jar target/mn-hello-0.1.jar
-```
+    /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
+    ```
 
-### Test the app JAR
+    ```shell
+    $ echo $PATH
 
-- http://localhost:8080/ should output "Hello World"
+    /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home/bin:/usr/local/Cellar/maven/3.8.4/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+   ```
 
-- http://localhost:8080/Micronaut should output "Hello Micronaut"
+    ```shell
+    $ java -version
+    
+    java version "17.0.3" 2022-04-19 LTS
+    Java(TM) SE Runtime Environment GraalVM EE 22.1.0 (build 17.0.3+8-LTS-jvmci-22.1-b05)
+    Java HotSpot(TM) 64-Bit Server VM GraalVM EE 22.1.0 (build 17.0.3+8-LTS-jvmci-22.1-b05, mixed mode, sharing)
+    ```
+
+    ```shell
+    $ native-image --version
+    
+    GraalVM 22.1.0 Java 17 EE (Java Version 17.0.3+8-LTS-jvmci-22.1-b05)
+    ```
+
+    ```shell
+    $ mvn --version
+
+    Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
+    Maven home: /usr/local/Cellar/maven/3.8.4/libexec
+    Java version: 17.0.3, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
+    Default locale: en_US, platform encoding: UTF-8
+    OS name: "mac os x", version: "12.4", arch: "x86_64", family: "mac"
+    ```
+
+    ```shell
+    $ ./mvnw --version
+
+    Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
+    Maven home: /Users/graal/.m2/wrapper/dists/apache-maven-3.6.3-bin/1iopthnavndlasol9gbrbg6bf2/apache-maven-3.6.3
+    Java version: 17.0.3, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
+    Default locale: en_US, platform encoding: UTF-8
+    OS name: "mac os x", version: "12.4", arch: "x86_64", family: "mac"
+    ```
+
+## Steps
+1. Git clone this repo.
+
+2. Build the app JAR
+
+    ```shell
+    mvn package
+    ```
+
+    **OR** 
+
+    ```shell
+    ./mvnw package
+    ```
+
+3. Run the app JAR
+
+    ```shell
+    java -jar target/MnHelloRest-0.1.jar
+    ```
+
+4. Test the app JAR
+
+    - http://localhost:8080/ should output "Hello World"
+
+    - http://localhost:8080/Micronaut should output "Hello Micronaut"
 
 
-## App native executable
+5. Build the app native executable
 
-### Build the app native executable
+    ```shell
+    mvn package -Dpackaging=native-image
+    ```
 
-```shell
-mvn package -Dpackaging=native-image
-```
+    **OR** 
 
-**OR** 
+    ```shell
+    ./mvnw package -Dpackaging=native-image
+    ```
 
-```shell
-./mvnw package -Dpackaging=native-image
-```
+6. Run the app native executable
 
-### Run the app native executable
+    ```shell
+    ./target/MnHelloRest
+    ```
 
-```shell
-./target/mn-hello
-```
+7. Test the app native executable
 
-### Test the app native executable
+    - http://localhost:8080/ should output "Hello World"
 
-- http://localhost:8080/ should output "Hello World"
-
-- http://localhost:8080/Micronaut-Graal-Native should output "Hello Micronaut-Graal-Native"
+    - http://localhost:8080/Micronaut-Graal-Native should output "Hello Micronaut-Graal-Native"
 
 
 ## Appendix 
