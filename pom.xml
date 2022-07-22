@@ -15,8 +15,8 @@
 
   <properties>
     <packaging>jar</packaging>
-    <jdk.version>17</jdk.version>
-    <release.version>17</release.version>
+    <jdk.version>11</jdk.version>
+    <release.version>11</release.version>
     <micronaut.version>3.5.2</micronaut.version>
     <micronaut.runtime>netty</micronaut.runtime>
     <exec.mainClass>com.example.Application</exec.mainClass>
@@ -101,6 +101,11 @@
             <!-- For Quick Build (22.1+) -->
             <!-- <buildArg>-Ob</buildArg> -->
           </buildArgs>
+          <!-- Start: Workaround for 22.2: Disable the default Java Module Path using USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM) -->
+          <!-- <environment>
+            <USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM>false</USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM>
+          </environment> -->
+          <!-- End: Workaround for 22.2: Disable the default Java Module Path using USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM -->
         </configuration>
       </plugin>
       <!-- End: Added for passing additional arguments to the native-image build tool -->
