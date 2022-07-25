@@ -75,20 +75,35 @@ To run this sample on local (Mac OS), you need the following:
     ./mvnw package
     ```
 
-3. Run the app JAR
+3. Run the app JAR in the background
 
     ```shell
-    java -jar target/MnHelloRest-0.1.jar
+    java -jar target/MnHelloRest-0.1.jar &
     ```
 
 4. Test the app JAR
 
-    - http://localhost:8080/ should output "Hello World"
+    4.1) Should output "Hello World"
 
-    - http://localhost:8080/Micronaut should output "Hello Micronaut"
+    ```shell
+    curl http://localhost:8080/
+    ```
 
+    4.2) Should output "Hello Micronaut"
 
-5. Build the app native executable
+    ```shell
+    curl http://localhost:8080/Micronaut
+    ```
+
+5. Bring the running app JAR in the foreground
+
+    ```shell
+    fg
+    ```
+
+6. Once the app is running in the foreground, press CTRL+C to stop it.
+
+7. Build the app native executable
 
     ```shell
     mvn package -Dpackaging=native-image
@@ -100,17 +115,33 @@ To run this sample on local (Mac OS), you need the following:
     ./mvnw package -Dpackaging=native-image
     ```
 
-6. Run the app native executable
+8. Run the app native executable in the background
 
     ```shell
-    ./target/MnHelloRest
+    ./target/MnHelloRest &
     ```
 
-7. Test the app native executable
+9. Test the app native executable
 
-    - http://localhost:8080/ should output "Hello World"
+    9.1) Should output "Hello World"
 
-    - http://localhost:8080/Micronaut-Graal-Native should output "Hello Micronaut-Graal-Native"
+    ```shell
+    curl http://localhost:8080/
+    ```
+
+    9.2) Should output "Hello Micronaut-Graal-Native"
+
+    ```shell
+    curl http://localhost:8080/Micronaut-Graal-Native
+    ```
+
+10. Bring the running app JAR in the foreground
+
+    ```shell
+    fg
+    ```
+
+11. Once the app is running in the foreground, press CTRL+C to stop it.
 
 
 ## Appendix 
