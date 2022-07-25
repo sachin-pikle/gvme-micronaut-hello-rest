@@ -1,66 +1,88 @@
-# Micronaut Hello World REST App with GraalVM Enterprise
+# Micronaut Hello World REST App with GraalVM Enterprise in Oracle Cloud Infrastructre Cloud Shell
 
-This is a simple hello world REST application using the Micronaut framework and GraalVM Enterprise Native Image and JDK.
+This sample shows how you can get started quickly with GraalVM Enterprise Edition in Oracle Cloud Infrastructre (OCI) Cloud Shell. This sample uses a simple hello world REST application built with the Micronaut framework and GraalVM Enterprise Native Image and JDK.
 
-## Prerequisites
+## What is GraalVM?
 
-To run this sample on local (Mac OS), you need the following:
+GraalVM is a high-performance JDK distribution that can accelerate any Java workload running on the HotSpot JVM.
 
-1. The latest GraalVM Enterprise 22.x for Java 17 components:
-    - Native Image, and
-    - JDK
+GraalVM Native Image ahead-of-time compilation enables you to build lightweight Java applications that are smaller, faster, and use less memory and CPU. At build time, GraalVM Native Image analyzes a Java application and its dependencies to identify just what classes, methods, and fields are absolutely necessary and generates optimized machine code for just those elements.
 
-2. (Optional) Maven. If you don't have Maven installed, you can use the Maven wrapper (`./mvnw`) included in the Micronaut code sample.
+GraalVM Enterprise Edition is available for use on Oracle Cloud Infrastructure (OCI) at no additional cost.
 
-3. Check the versions installed using:
+## What is Micronaut?
 
-    ```shell
-    $ echo $JAVA_HOME
+Micronaut is a modern, JVM-based framework to build modular, easily testable microservice and serverless applications. By avoiding runtime reflection in favor of annotation processing, Micronaut improves the Java-based development experience by detecting errors at compile time instead of runtime, and improves Java-based application start time and memory footprint. Micronaut includes a persistence framework called Micronaut Data that precomputes your SQL queries at compilation time making it a great fit for working with databases like MySQL, Oracle Autonomous Database, etc.
 
-    /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
-    ```
+Micronaut uses GraalVM Native Image to build lightweight Java applications that use less memory and CPUs, are smaller and faster because of an advanced ahead-of-time compilation technology.
 
-    ```shell
-    $ echo $PATH
+## What is Cloud Shell?
 
-    /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home/bin:/usr/local/Cellar/maven/3.8.4/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-   ```
+Cloud Shell is a free-to-use browser-based terminal accessible from the Oracle Cloud Console. It provides access to a Linux shell with pre-authenticated OCI CLI and other pre-installed developer tools. You can use the shell to interact with OCI resources, follow labs and tutorials, and quickly run commands. 
 
-    ```shell
-    $ java -version
-    
-    java version "17.0.3" 2022-04-19 LTS
-    Java(TM) SE Runtime Environment GraalVM EE 22.1.0 (build 17.0.3+8-LTS-jvmci-22.1-b05)
-    Java HotSpot(TM) 64-Bit Server VM GraalVM EE 22.1.0 (build 17.0.3+8-LTS-jvmci-22.1-b05, mixed mode, sharing)
-    ```
 
-    ```shell
-    $ native-image --version
-    
-    GraalVM 22.1.0 Java 17 EE (Java Version 17.0.3+8-LTS-jvmci-22.1-b05)
-    ```
+## Prerequisites on Cloud Shell
 
-    ```shell
-    $ mvn --version
+***Note: To run this sample on local macOS instead, first complete the [Prerequisites on local macOS](./Prereqs_local_macOS.md), and then skip to the next section [Steps](#steps).***
 
-    Apache Maven 3.8.4 (9b656c72d54e5bacbed989b64718c159fe39b537)
-    Maven home: /usr/local/Cellar/maven/3.8.4/libexec
-    Java version: 17.0.3, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
-    Default locale: en_US, platform encoding: UTF-8
-    OS name: "mac os x", version: "12.4", arch: "x86_64", family: "mac"
-    ```
+Cloud Shell comes with Maven and the following GraalVM Enterprise components preinstalled: 
+- Java Development Kit (JDK), and
+- Native Image 
 
-    ```shell
-    $ ./mvnw --version
+Check the versions installed using:
 
-    Apache Maven 3.6.3 (cecedd343002696d0abb50b32b541b8a6ba2883f)
-    Maven home: /Users/graal/.m2/wrapper/dists/apache-maven-3.6.3-bin/1iopthnavndlasol9gbrbg6bf2/apache-maven-3.6.3
-    Java version: 17.0.3, vendor: Oracle Corporation, runtime: /Library/Java/JavaVirtualMachines/graalvm-ee-java17-22.1.0/Contents/Home
-    Default locale: en_US, platform encoding: UTF-8
-    OS name: "mac os x", version: "12.4", arch: "x86_64", family: "mac"
-    ```
+```shell
+$ csruntimectl java list
+
+    graalvmeejdk-17.0.4                                    /usr/lib64/graalvm/graalvm22-ee-java17
+  * openjdk-11.0.15                   /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.0.1.el7_9.x86_64
+    openjdk-1.8.0.332                /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64
+```
+
+```shell
+$ csruntimectl java set graalvmeejdk-17.0.4
+
+The current managed java version is set to graalvmeejdk-17.0.4.
+```
+
+```shell
+$ echo $JAVA_HOME
+
+/usr/lib64/graalvm/graalvm22-ee-java17
+```
+
+```shell
+$ echo $PATH
+
+/usr/lib64/graalvm/graalvm22-ee-java17/bin/:/ggs_client/usr/bin:/home/user_xyz/.yarn/bin:/home/user_xyz/.config/yarn/global/node_modules/.bin:/opt/oracle/sqlcl/bin:/usr/lib/oracle/21/client64/bin/:/home/oci/.pyenv/plugins/pyenv-virtualenv/shims:/home/oci/.pyenv/shims:/home/oci/.pyenv/bin:/opt/rh/rh-ruby27/root/usr/local/bin:/opt/rh/rh-ruby27/root/usr/bin:/opt/rh/rh-maven36/root/usr/bin:/opt/rh/rh-git227/root/usr/bin:/opt/rh/rh-dotnet31/root/usr/bin:/opt/rh/rh-dotnet31/root/usr/sbin:/opt/rh/httpd24/root/usr/bin:/opt/rh/httpd24/root/usr/sbin:/opt/rh/devtoolset-11/root/usr/bin:/home/oci/bin:/opt/gradle/gradle-7.4.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/user_xyz/.composer/vendor/bin:/opt/yarn-v1.22.17/bin:/home/user_xyz/.dotnet/tools
+```
+
+```shell
+$ java -version
+
+java version "17.0.4" 2022-07-19 LTS   
+Java(TM) SE Runtime Environment GraalVM EE 22.2.0 (build 17.0.4+11-LTS-jvmci-22.2-b05)   
+Java HotSpot(TM) 64-Bit Server VM GraalVM EE 22.2.0 (build 17.0.4+11-LTS-jvmci-22.2-b05, mixed mode, sharing)
+```
+
+```shell
+$ native-image --version
+
+GraalVM 22.2.0 Java 17 EE (Java Version 17.0.4+11-LTS-jvmci-22.2-b05)
+```
+
+```shell
+$ mvn --version
+
+Apache Maven 3.6.1 (Red Hat 3.6.1-6.3)
+Maven home: /opt/rh/rh-maven36/root/usr/share/maven
+Java version: 17.0.4, vendor: Oracle Corporation, runtime: /usr/lib64/graalvm/graalvm22-ee-java17   
+Default locale: en_US, platform encoding: UTF-8
+OS name: "linux", version: "4.14.35-2047.513.2.2.el7uek.x86_64", arch: "amd64", family: "unix"
+```
 
 ## Steps
+
 1. Git clone this repo.
 
 2. Build the app JAR
@@ -142,32 +164,3 @@ To run this sample on local (Mac OS), you need the following:
     ```
 
 11. Once the app is running in the foreground, press CTRL+C to stop it.
-
-
-## Appendix 
-
-### Learning from Micronaut-generated Dockerfiles
-
-Let's use the Micronaut Maven plugin to generate a Dockerfile so we can learn how Micronaut uses multistage Docker builds to build the application as a native executable and package it in small runtime container images.
-
-Micronaut uses GraalVM Community Edition as you will see in the `FROM ghcr.io/graalvm/...` statement in the generated Dockerfiles below.
-
-#### Default option
-
-Using this command we will see the default Dockerfile generated by Micronaut to build the native executable and package it in a small runtime image.
-
-```shell
-mvn mn:dockerfile -Dpackaging=docker-native
-```
-
-Here's the [generated default Dockerfile](/_reference/Dockerfile.generated-by-mn-default).
-
-#### "Mostly static" option
-
-Using this command we will see how Micronaut generates a “mostly static” native executable and packages it in a distroless base image.
-
-```shell
-mvn mn:dockerfile -Dpackaging=docker-native -Dmicronaut.native-image.base-image-run=gcr.io/distroless/base -Pgraalvm
-```
-
-Notice the `-H:+StaticExecutableWithDynamicLibC` in the [generated "mostly static" Dockerfile](/_reference/Dockerfile.generated-by-mn-mostly-static).
