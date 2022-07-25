@@ -11,12 +11,12 @@
 #
 
 ## Begin: Option 1
-# FROM gcr.io/distroless/base AS runtime
+FROM gcr.io/distroless/base AS runtime
 ## End: Option 1
 
 ## Begin: Option 2
-FROM frolvlad/alpine-glibc:alpine-3.12
-RUN apk update && apk add libstdc++
+# FROM frolvlad/alpine-glibc:alpine-3.12
+# RUN apk update && apk add libstdc++
 ## End: Option 2
 
 ARG APP_FILE
