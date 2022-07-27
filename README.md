@@ -132,12 +132,16 @@ Cloud Shell is a free-to-use browser-based terminal accessible from the Oracle C
 7. Build the app native executable
 
     ```shell
+    export USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false
+
     mvn package -Dpackaging=native-image
     ```
 
     **OR** 
 
     ```shell
+    export USE_NATIVE_IMAGE_JAVA_PLATFORM_MODULE_SYSTEM=false
+    
     ./mvnw package -Dpackaging=native-image
     ```
 
