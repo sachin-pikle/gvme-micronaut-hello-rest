@@ -22,7 +22,7 @@ Cloud Shell is a free-to-use browser-based terminal accessible from the Oracle C
 
 GraalVM Enterprise JDK 17 (Java Development Kit) and Native Image are preinstalled in Cloud Shell. 
 
-***Note: To run this sample on local macOS instead of Cloud Shell, follow the [Prerequisites on local macOS](./README_Prereqs_local_macOS.md), and skip to the next section [Steps](#steps).***
+***Note: To run this sample on local macOS instead of Cloud Shell, follow the [Prerequisites on local macOS](./README_Prereqs_local_macOS.md), and skip to the next section [Steps to run a Java application](#steps-to-run-a-java-application).***
 
 ## Prerequisites
 
