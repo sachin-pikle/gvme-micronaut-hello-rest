@@ -20,64 +20,99 @@ Micronaut uses GraalVM Native Image to build lightweight Java applications that 
 
 Cloud Shell is a free-to-use browser-based terminal accessible from the Oracle Cloud Console. It provides access to a Linux shell with pre-authenticated OCI CLI and other pre-installed developer tools. You can use the shell to interact with OCI resources, follow labs and tutorials, and quickly run commands. 
 
+GraalVM Enterprise JDK 17 (Java Development Kit) and Native Image are preinstalled in Cloud Shell. 
 
 ***Note: To run this sample on local macOS instead of Cloud Shell, follow the [Prerequisites on local macOS](./README_Prereqs_local_macOS.md), and skip to the next section [Steps](#steps).***
 
-## Prerequisites on Cloud Shell
+## Prerequisites
 
-1. Cloud Shell comes with Maven and the following GraalVM Enterprise components preinstalled: 
-    - Java Development Kit (JDK), and
-    - Native Image
+1. [Login to OCI Console and launch Cloud Shell](https://cloud.oracle.com/?bdcstate=maximized&cloudshell=true).
 
-2. List the preinstalled JDKs in Cloud Shell:
+2. List the installed JDKs:
 
     ```shell
-    $ csruntimectl java list
-
-        graalvmeejdk-17.0.4                                    /usr/lib64/graalvm/graalvm22-ee-java17
-      * openjdk-11.0.15                   /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.0.1.el7_9.x86_64
-        openjdk-1.8.0.332                /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64
+    csruntimectl java list
     ```
 
-3. Make GraalVM Enteprise JDK the current JDK.
+    The output should be similar to:
 
     ```shell
-    $ csruntimectl java set graalvmeejdk-17.0.4
+      graalvmeejdk-17.0.4                                    /usr/lib64/graalvm/graalvm22-ee-java17
+    * openjdk-11.0.15                   /usr/lib/jvm/java-11-openjdk-11.0.15.0.9-2.0.1.el7_9.x86_64
+      openjdk-1.8.0.332                /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.332.b09-1.el7_9.x86_64
+    ```
 
+3. Select GraalVM as the current JDK:
+
+    ```shell
+    csruntimectl java set graalvmeejdk-17.0.4
+    ```
+
+    The output should be similar to:
+
+    ```shell
     The current managed java version is set to graalvmeejdk-17.0.4.
     ```
 
-4. Check the environment variables and versions in use:
+4. Confirm the environment variable `JAVA_HOME` is set correctly:
 
     ```shell
-    $ echo $JAVA_HOME
+    echo $JAVA_HOME
+    ```
 
+    The output should be similar to:
+
+    ```shell
     /usr/lib64/graalvm/graalvm22-ee-java17
     ```
 
-    ```shell
-    $ echo $PATH
+5. Confirm the environment variable `PATH` is set correctly:
 
-    /usr/lib64/graalvm/graalvm22-ee-java17/bin/:/ggs_client/usr/bin:/home/user_xyz/.yarn/bin:/home/user_xyz/.config/yarn/global/node_modules/.bin:/opt/oracle/sqlcl/bin:/usr/lib/oracle/21/client64/bin/:/home/oci/.pyenv/plugins/pyenv-virtualenv/shims:/home/oci/.pyenv/shims:/home/oci/.pyenv/bin:/opt/rh/rh-ruby27/root/usr/local/bin:/opt/rh/rh-ruby27/root/usr/bin:/opt/rh/rh-maven36/root/usr/bin:/opt/rh/rh-git227/root/usr/bin:/opt/rh/rh-dotnet31/root/usr/bin:/opt/rh/rh-dotnet31/root/usr/sbin:/opt/rh/httpd24/root/usr/bin:/opt/rh/httpd24/root/usr/sbin:/opt/rh/devtoolset-11/root/usr/bin:/home/oci/bin:/opt/gradle/gradle-7.4.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/user_xyz/.composer/vendor/bin:/opt/yarn-v1.22.17/bin:/home/user_xyz/.dotnet/tools
+    ```shell
+    echo $PATH
     ```
 
-    ```shell
-    $ java -version
+    The output should be similar to:
 
+    ```shell
+    /usr/lib64/graalvm/graalvm22-ee-java17/bin/:/ggs_client/usr/bin: ...
+    ```
+
+6. Confirm the `java` version:
+
+    ```shell
+    java -version
+    ```
+
+    The output should be similar to:
+
+    ```shell
     java version "17.0.4" 2022-07-19 LTS   
     Java(TM) SE Runtime Environment GraalVM EE 22.2.0 (build 17.0.4+11-LTS-jvmci-22.2-b05)   
     Java HotSpot(TM) 64-Bit Server VM GraalVM EE 22.2.0 (build 17.0.4+11-LTS-jvmci-22.2-b05, mixed mode, sharing)
     ```
 
-    ```shell
-    $ native-image --version
+7. Confirm the `native-image` version:
 
+    ```shell
+    native-image --version
+    ```
+
+    The output should be similar to:
+
+    ```shell
     GraalVM 22.2.0 Java 17 EE (Java Version 17.0.4+11-LTS-jvmci-22.2-b05)
     ```
 
-    ```shell
-    $ mvn --version
+8. Confirm the `maven` version and `Java` used:
 
+    ```shell
+    mvn --version
+    ```
+
+    The output should be similar to:
+
+    ```shell
     Apache Maven 3.6.1 (Red Hat 3.6.1-6.3)
     Maven home: /opt/rh/rh-maven36/root/usr/share/maven
     Java version: 17.0.4, vendor: Oracle Corporation, runtime: /usr/lib64/graalvm/graalvm22-ee-java17   
@@ -85,7 +120,8 @@ Cloud Shell is a free-to-use browser-based terminal accessible from the Oracle C
     OS name: "linux", version: "4.14.35-2047.513.2.2.el7uek.x86_64", arch: "amd64", family: "unix"
     ```
 
-## Steps
+
+## Steps to run a Java application
 
 1. Git clone this repo.
 
