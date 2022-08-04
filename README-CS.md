@@ -1,4 +1,4 @@
-# Micronaut Hello World REST App with GraalVM Enterprise in Oracle Cloud Infrastructure Cloud Shell
+# Micronaut Hello World REST App with GraalVM Enterprise in OCI Cloud Shell
 
 This sample shows how you can get started quickly with GraalVM Enterprise Edition in Oracle Cloud Infrastructre (OCI) Cloud Shell. This sample uses a simple hello world REST application built with the Micronaut framework and GraalVM Enterprise Native Image and JDK (Java Development Kit).
 
