@@ -55,3 +55,5 @@ To run this sample on local (Mac OS), you need the following:
     Default locale: en_GB, platform encoding: UTF-8
     OS name: "mac os x", version: "12.4", arch: "x86_64", family: "mac"
     ```
+
+Continue to **[Step 4: Setup Project and Run](./README-CS.md#step-4-setup-project-and-run)**
